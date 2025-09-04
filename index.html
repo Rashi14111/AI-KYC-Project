@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Liveness Verification</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6;
+        }
+        .container {
+            max-width: 90%;
+            margin: auto;
+        }
+        #video {
+            width: 100%;
+            border-radius: 12px;
+            background-color: #000;
+            max-width: 600px;
+            height: 450px;
+            object-fit: cover;
+        }
+        .status-box {
+            min-height: 80px;
+            border-radius: 12px;
+            padding: 1rem;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 500;
+        }
+        .message-box {
+            padding: 1rem;
+            margin-top: 1rem;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            text-align: center;
+        }
+        .blinking-text {
+            animation: blinker 1s cubic-bezier(.5, 0, 1, 1) infinite alternate;
+        }
+        @keyframes blinker {
+            from { opacity: 1; }
+            to { opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container py-8 md:py-16">
+        <div class="flex flex-col items-center space-y-8">
+            <div class="text-center space-y-2">
+                <h1 class="text-3xl md:text-4xl font-bold text-gray-800">Live Verification</h1>
+                <p class="text-gray-600 max-w-lg mx-auto">
+                    Please position your face in the center of the frame and follow the on-screen instructions.
+                </p>
+            </div>
+
+            <div class="w-full flex justify-center relative rounded-xl shadow-lg border-2 border-gray-200 bg-gray-900">
+                <video id="video" autoplay playsinline class="rounded-xl"></video>
+                <!-- Overlay for face frame guidance -->
+                <div id="overlay" class="absolute inset-0 flex items-center justify-center pointer-events-none">
+                    <div id="guide-circle" class="border-4 border-dashed border-gray-400 rounded-full" style="width: 300px; height: 300px;"></div>
+                </div>
+            </div>
+
+            <div id="status-display" class="w-full max-w-xl status-box bg-gray-100 text-gray-700 transition-colors duration-300">
+                <span class="text-lg">Waiting for camera...</span>
+            </div>
+            
+            <button id="start-button" class="w-full max-w-xs px-6 py-3 rounded-full text-white font-semibold transition-all duration-300 transform scale-100 opacity-100 bg-gray-500 hover:bg-gray-600 disabled:opacity-50 disabled:scale-95 disabled:hover:bg-gray-500">
+                Start Liveness Check
+            </button>
+
+            <div id="result-message" class="w-full max-w-lg message-box hidden"></div>
+        </div>
+    </div>
+
+    <script>
+        const video = document.getElementById('video');
+        const startButton = document.getElementById('start-button');
+        const statusDisplay = document.getElementById('status-display');
+        const resultMessage = document.getElementById('result-message');
+        const guideCircle = document.getElementById('guide-circle');
+
+        let isRunning = false;
+        let blinkCount = 0;
+        let consecutiveEyesClosed = 0;
+        let lastFacePosition = null;
+        let headMovementDetected = false;
+        let startTime = null;
+
+        // Load face-api.js models from CDN
+        const MODEL_URL = 'https://cdn.jsdelivr.net/npm/face-api.js@0.22.2/models/';
+        
+        async function loadModels() {
+            try {
+                await faceapi.nets.tinyFaceDetector.loadFromUri(MODEL_URL);
+                await faceapi.nets.faceLandmark68Net.loadFromUri(MODEL_URL);
+                statusDisplay.innerHTML = '<span class="text-lg text-green-600">Camera ready. Please center your face.</span>';
+                startButton.disabled = false;
+                startButton.classList.remove('bg-gray-500', 'hover:bg-gray-600');
+                startButton.classList.add('bg-blue-600', 'hover:bg-blue-700');
+            } catch (error) {
+                console.error("Failed to load models:", error);
+                statusDisplay.innerHTML = '<span class="text-lg text-red-600">Error loading models. Please refresh.</span>';
+            }
+        }
+
+        async function setupCamera() {
+            if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+                const constraints = {
+                    video: {
+                        // The `ideal` properties ask the browser for a high-quality video feed.
+                        // You can lower these values (e.g., 640, 480) if performance is still an issue.
+                        width: { ideal: 1280 },
+                        height: { ideal: 720 },
+                        facingMode: 'user',
+                        // A lower frame rate is better for stability and reduces the CPU load for AI processing.
+                        frameRate: { max: 10 } 
+                    }
+                };
+                try {
+                    const stream = await navigator.mediaDevices.getUserMedia(constraints);
+                    window.stream = stream;
+                    video.srcObject = stream;
+                    video.onloadedmetadata = () => {
+                        video.play();
+                        loadModels();
+                    };
+                } catch (error) {
+                    console.error("Camera access denied or failed:", error);
+                    statusDisplay.innerHTML = '<span class="text-lg text-red-600">Error: Camera access denied. Please allow permissions.</span>';
+                }
+            } else {
+                statusDisplay.innerHTML = '<span class="text-lg text-red-600">Error: Your browser does not support camera access.</span>';
+            }
+        }
+
+        function checkLiveness(landmarks) {
+            const leftEye = landmarks.getLeftEye();
+            const rightEye = landmarks.getRightEye();
+
+            // Calculate Eye Aspect Ratio (EAR) for blink detection
+            const leftEAR = eyeAspectRatio(leftEye);
+            const rightEAR = eyeAspectRatio(rightEye);
+            const ear = (leftEAR + rightEAR) / 2.0;
+
+            const EYE_AR_THRESH = 0.25;
+
+            if (ear < EYE_AR_THRESH) {
+                consecutiveEyesClosed++;
+            } else {
+                if (consecutiveEyesClosed > 1) { // 2+ consecutive frames with closed eyes = blink
+                    blinkCount++;
+                    statusDisplay.innerHTML = `<span class="text-lg text-green-600">Blink detected! (${blinkCount}/1).</span>`;
+                }
+                consecutiveEyesClosed = 0;
+            }
+
+            // Head movement detection (simple check)
+            const headPosition = landmarks.getJawOutline()[8]; // The chin point
+            if (lastFacePosition) {
+                const dx = headPosition.x - lastFacePosition.x;
+                const dy = headPosition.y - lastFacePosition.y;
+                const movementThreshold = 10;
+                if (Math.abs(dx) > movementThreshold || Math.abs(dy) > movementThreshold) {
+                    headMovementDetected = true;
+                    statusDisplay.innerHTML = '<span class="text-lg text-green-600">Head movement detected!</span>';
+                }
+            }
+            lastFacePosition = headPosition;
+
+            // Check if liveness criteria are met
+            if (blinkCount >= 1 && headMovementDetected) {
+                isRunning = false;
+                startButton.disabled = true;
+                showResult(true, "Liveness Confirmed! Verification Complete.");
+                setTimeout(() => {
+                    const tracks = video.srcObject.getTracks();
+                    tracks.forEach(track => track.stop());
+                }, 1000);
+            }
+        }
+
+        // Helper function to calculate Eye Aspect Ratio (EAR)
+        function eyeAspectRatio(eye) {
+            const A = distance(eye[1], eye[5]);
+            const B = distance(eye[2], eye[4]);
+            const C = distance(eye[0], eye[3]);
+            return (A + B) / (2.0 * C);
+        }
+
+        function distance(p1, p2) {
+            return Math.sqrt(Math.pow(p2.x - p1.x, 2) + Math.pow(p2.y - p1.y, 2));
+        }
+
+        function showResult(success, message) {
+            resultMessage.textContent = message;
+            resultMessage.classList.remove('hidden');
+            if (success) {
+                resultMessage.classList.add('bg-green-100', 'text-green-800');
+                resultMessage.classList.remove('bg-red-100', 'text-red-800');
+            } else {
+                resultMessage.classList.add('bg-red-100', 'text-red-800');
+                resultMessage.classList.remove('bg-green-100', 'text-green-800');
+            }
+        }
+
+        startButton.addEventListener('click', async () => {
+            if (isRunning) return;
+
+            isRunning = true;
+            blinkCount = 0;
+            consecutiveEyesClosed = 0;
+            lastFacePosition = null;
+            headMovementDetected = false;
+            startTime = Date.now();
+            
+            startButton.disabled = true;
+            statusDisplay.innerHTML = '<span class="text-lg text-yellow-600">Please blink your eyes naturally or move your head.</span>';
+            resultMessage.classList.add('hidden');
+
+            const detectFace = async () => {
+                if (!isRunning) return;
+                
+                const detections = await faceapi.detectSingleFace(video, new faceapi.TinyFaceDetectorOptions()).withFaceLandmarks();
+
+                if (detections) {
+                    const { landmarks } = detections;
+                    checkLiveness(landmarks);
+                    guideCircle.style.borderColor = '#22c55e'; // Green when face is detected
+                    guideCircle.style.transform = `scale(1.1)`;
+                } else {
+                    statusDisplay.innerHTML = '<span class="text-lg text-red-600 blinking-text">No face detected. Please center your face.</span>';
+                    guideCircle.style.borderColor = '#ef4444'; // Red when no face
+                    guideCircle.style.transform = `scale(1.0)`;
+                }
+
+                if (Date.now() - startTime > 15000) {
+                    isRunning = false;
+                    startButton.disabled = false;
+                    showResult(false, "Verification failed due to timeout. Please try again.");
+                    guideCircle.style.borderColor = '#ef4444';
+                }
+
+                // Call detectFace again after a short delay to reduce CPU load and prevent freezing.
+                setTimeout(() => {
+                    requestAnimationFrame(detectFace);
+                }, 100);
+            };
+
+            detectFace();
+        });
+
+        window.onload = setupCamera;
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/face-api.js@0.22.2/dist/face-api.js"></script>
+</body>
+</html>
