@@ -1,0 +1,10 @@
+streamlit
+opencv-python
+pytesseract
+Pillow
+torch
+torchvision
+speechbrain
+numpy
+reportlab
+
