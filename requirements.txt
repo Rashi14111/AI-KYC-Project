@@ -9,4 +9,5 @@ torchvision
 speechbrain
 numpy
 reportlab
+sounddevice
 
