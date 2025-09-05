@@ -18,3 +18,4 @@ SpeechRecognition
 cvzone
 streamlit-drawable-canvas
 scikit-image
+dlib-bin==19.24.0
