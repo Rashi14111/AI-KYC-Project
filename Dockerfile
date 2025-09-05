@@ -1,8 +1,11 @@
 # Use a base image with Python and Ubuntu
 FROM python:3.10-slim
 
+# Set a non-interactive frontend for apt-get to avoid prompts
+ENV DEBIAN_FRONTEND=noninteractive
+
 # Install the system dependencies for av, opencv, sounddevice, and dlib
-RUN apt-get update && apt-get install -y \
+RUN apt-get update && apt-get install -y --no-install-recommends \
     libavdevice-dev \
     libavformat-dev \
     libavcodec-dev \
@@ -18,7 +21,7 @@ RUN apt-get update && apt-get install -y \
     libpng-dev \
     libtiff-dev \
     zlib1g-dev \
-    libatlas-base-dev
+    && rm -rf /var/lib/apt/lists/*
 
 # Set the working directory
 WORKDIR /app
