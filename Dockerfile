@@ -1,7 +1,7 @@
 # Use a base image with Python and Ubuntu
 FROM python:3.10-slim
 
-# Install the system dependencies for av, opencv, and sounddevice (PortAudio)
+# Install the system dependencies for av, opencv, sounddevice, and dlib
 RUN apt-get update && apt-get install -y \
     libavdevice-dev \
     libavformat-dev \
@@ -11,7 +11,14 @@ RUN apt-get update && apt-get install -y \
     libasound2-dev \
     libgl1 \
     libportaudio2 \
-    portaudio19-dev
+    portaudio19-dev \
+    cmake \
+    build-essential \
+    libjpeg-dev \
+    libpng-dev \
+    libtiff-dev \
+    zlib1g-dev \
+    libatlas-base-dev
 
 # Set the working directory
 WORKDIR /app
