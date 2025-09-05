@@ -10,4 +10,11 @@ speechbrain
 numpy
 reportlab
 sounddevice
-
+soundfile
+face_recognition
+scipy
+pyttsx3
+SpeechRecognition
+cvzone
+streamlit-drawable-canvas
+scikit-image
