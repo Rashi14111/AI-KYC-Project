@@ -1,15 +1,26 @@
-# Use a slim Python image to keep the size small
+# Use a slim Python image
 FROM python:3.10-slim
+
+# Install system dependencies for the required libraries
+RUN apt-get update && apt-get install -y \
+    build-essential \
+    cmake \
+    libopenblas-dev \
+    liblapack-dev \
+    libjpeg-dev \
+    libpng-dev \
+    libtiff-dev \
+    libavdevice-dev \
+    libavformat-dev \
+    libavcodec-dev \
+    libswscale-dev \
+    libasound2-dev \
+    libgl1 \
+    libportaudio2 \
+    portaudio19-dev
 
 # Set the working directory
 WORKDIR /app
-
-# Install necessary system dependencies for OpenCV and other packages
-RUN apt-get update && apt-get install -y \
-    libgl1 \
-    libportaudio2 \
-    portaudio19-dev \
-    cmake
 
 # Copy the requirements file and install Python packages
 COPY requirements.txt .
