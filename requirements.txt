@@ -11,11 +11,10 @@ numpy
 reportlab
 sounddevice
 soundfile
-face_recognition
 scipy
 pyttsx3
 SpeechRecognition
 cvzone
 streamlit-drawable-canvas
 scikit-image
-dlib-bin==19.24.0
+face_recognition
