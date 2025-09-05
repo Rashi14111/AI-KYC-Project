@@ -1,11 +1,15 @@
-# Use a base image with Python and Ubuntu
-FROM python:3.10-slim
+# Stage 1: Build a larger image to compile dlib
+FROM python:3.10 as builder
 
-# Set a non-interactive frontend for apt-get to avoid prompts
-ENV DEBIAN_FRONTEND=noninteractive
-
-# Install the system dependencies for av, opencv, sounddevice, and dlib
-RUN apt-get update && apt-get install -y --no-install-recommends \
+# Install system dependencies for dlib, opencv, and sounddevice
+RUN apt-get update && apt-get install -y \
+    build-essential \
+    cmake \
+    libopenblas-dev \
+    liblapack-dev \
+    libjpeg-dev \
+    libpng-dev \
+    libtiff-dev \
     libavdevice-dev \
     libavformat-dev \
     libavcodec-dev \
@@ -14,23 +18,31 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libasound2-dev \
     libgl1 \
     libportaudio2 \
-    portaudio19-dev \
-    cmake \
-    build-essential \
-    libjpeg-dev \
-    libpng-dev \
-    libtiff-dev \
-    zlib1g-dev \
-    && rm -rf /var/lib/apt/lists/*
+    portaudio19-dev
 
 # Set the working directory
-WORKDIR /app
+WORKDIR /usr/src/app
 
 # Copy the requirements file and install Python packages
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy the rest of your application code
+# Stage 2: Create a smaller, final image
+FROM python:3.10-slim
+
+# Install final runtime dependencies
+RUN apt-get update && apt-get install -y \
+    libgl1 \
+    libportaudio2 \
+    portaudio19-dev
+
+# Set the working directory
+WORKDIR /app
+
+# Copy Python packages from the builder stage
+COPY --from=builder /usr/local/lib/python3.10/site-packages/ /usr/local/lib/python3.10/site-packages/
+
+# Copy the application code
 COPY . .
 
 # Expose the port that Streamlit runs on
