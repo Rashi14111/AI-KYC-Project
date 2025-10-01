@@ -1,51 +1,58 @@
-🛡️ AI-Powered KYC Verification System
+# 🛡️ AI-Powered KYC Verification System  
 
-An end-to-end AI-driven KYC (Know Your Customer) system built with Streamlit, OpenCV, TensorFlow, and Speech Recognition.
-It automates document verification, face recognition, liveness detection, voice confirmation, and signature verification — ensuring secure identity validation.
+An **end-to-end AI-driven KYC (Know Your Customer) system** built with **Streamlit, OpenCV, TensorFlow, and Speech Recognition**.  
+It automates document verification, face recognition, liveness detection, voice confirmation, and signature verification — ensuring secure identity validation.  
 
-🚀 Features
+---
 
-📄 Document OCR & Forgery Detection – Extracts text and checks authenticity of Aadhaar, PAN, Driving License
+## 🚀 Features
 
-🧑‍🦰 Face Recognition – Matches live webcam feed with ID photo
+- 📄 **Document OCR & Forgery Detection** – Extracts text and checks authenticity of Aadhaar, PAN, Driving License  
+- 🧑‍🦰 **Face Recognition** – Matches live webcam feed with ID photo  
+- ✌️ **Liveness Detection** – Prevents spoofing using peace sign gesture  
+- 🎙️ **Voice Q&A** – Challenge-response verification with speech recognition  
+- ✍️ **Signature Verification** – Compares PAN card signature with a drawn digital signature  
+- 📊 **Final KYC Scoring** – Aggregates all checks to approve/reject identity  
 
-✌️ Liveness Detection – Prevents spoofing using peace sign gesture
+---
 
-🎙️ Voice Q&A – Challenge-response verification with speech recognition
+## 🛠️ Tech Stack
 
-✍️ Signature Verification – Compares PAN card signature with a drawn digital signature
+- **Languages:** Python  
+- **Libraries:** Streamlit, OpenCV, FaceRecognition, SpeechRecognition, NumPy, Pandas, cvzone  
+- **Deployment:** Streamlit Cloud / Docker  
 
-📊 Final KYC Scoring – Aggregates all checks to approve/reject identity
+---
 
-🛠️ Tech Stack
+## 📂 Project Structure
 
-Languages: Python
-
-Libraries: Streamlit, OpenCV, FaceRecognition, SpeechRecognition, NumPy, Pandas, cvzone
-
-Deployment: Streamlit Cloud / Docker
-
-📂 Project Structure
 AI-KYC-Project/
-│── app.py                 # Main Streamlit application
+│── app.py # Main Streamlit application
 │── modules/
-│   ├── ocr_module.py       # OCR extraction
-│   ├── forgery_module.py   # Forgery detection
-│   ├── voice_module.py     # Voice verification
-│   ├── signature_module.py # Signature extraction + comparison
-│   └── risk_module.py      # Risk scoring
-│── requirements.txt        # Dependencies
-│── Dockerfile              # Deployment config
-│── uploads/                # Temporary uploads
-│── images/                 # Screenshots
+│ ├── ocr_module.py # OCR extraction
+│ ├── forgery_module.py # Forgery detection
+│ ├── voice_module.py # Voice verification
+│ ├── signature_module.py # Signature extraction + comparison
+│ └── risk_module.py # Risk scoring
+│── requirements.txt # Dependencies
+│── Dockerfile # Deployment config
+│── uploads/ # Temporary uploads
+│── images/ # Screenshots
 
-▶️ Run Locally
+yaml
+Copy code
+
+---
+
+## ▶️ Run Locally
+
+```bash
 git clone https://github.com/Rashi14111/AI-KYC-Project.git
 cd AI-KYC-Project
 pip install -r requirements.txt
 streamlit run app.py
-
 📸 Screenshots
+https://github.com/Rashi14111/AI-KYC-Project/tree/d906c4607be764dc460d8d058000182177b1c0c0/images
 Document Verification
 
 Face Recognition & Liveness
@@ -53,9 +60,3 @@ Face Recognition & Liveness
 Signature Verification
 
 Final KYC Score
-
-✅ Notes
-
-Make sure your webcam and microphone are allowed in Streamlit for live verification.
-
-Temporary uploads are stored in the uploads/ folder and cleared after processing.
