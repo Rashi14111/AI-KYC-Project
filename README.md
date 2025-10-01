@@ -1,3 +1,7 @@
+![04_final_validation](https://github.com/user-attachments/assets/b9097152-5b37-495c-8005-99a5ee8c33d3)
+![03_DigitalSig](https://github.com/user-attachments/assets/f8a1ea1f-b3cd-484d-896d-137c45161c80)
+![02_Video voiceverification](https://github.com/user-attachments/assets/aa225361-d659-4cda-84b8-13d8a58e774f)
+![01_upload_and_extract_details](https://github.com/user-attachments/assets/54cf933d-cc21-492c-b885-cf7dcedea03f)
 # 🛡️ AI-Powered KYC Verification System  
 
 An **end-to-end AI-driven KYC (Know Your Customer) system** built with **Streamlit, OpenCV, TensorFlow, and Speech Recognition**.  
