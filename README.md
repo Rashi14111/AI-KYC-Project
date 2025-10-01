@@ -52,8 +52,8 @@ cd AI-KYC-Project
 pip install -r requirements.txt
 streamlit run app.py
 📸 Screenshots
-https://github.com/Rashi14111/AI-KYC-Project/tree/d906c4607be764dc460d8d058000182177b1c0c0/images
-Document Verification
+
+![Document Verification](https://raw.githubusercontent.com/Rashi14111/AI-KYC-Project/d906c4607be764dc460d8d058000182177b1c0c0/images/01_upload_and_extract_details.jpg)
 
 Face Recognition & Liveness
 
