@@ -50,20 +50,18 @@ Copy code
 git clone https://github.com/Rashi14111/AI-KYC-Project.git
 cd AI-KYC-Project
 pip install -r requirements.txt![01_upload_and_extract_details](https://github.com/user-attachments/assets/25ba9758-d779-4c9d-ab5c-c4c4a17d8978)
-
 streamlit run app.py
 
-📸 Screenshots<img width="1207" height="401" alt="image" src="https://github.com/user-attachments/assets/6a04fd5a-b008-4ca8-80f8-73b63d670db2" />
+## 📸 Screenshots
 
+### Document Verification  
+![Document Verification](https://github.com/Rashi14111/AI-KYC-Project/blob/main/images/01_upload_and_extract_details.jpg?raw=true)
 
-![Image](https://github.com/user-attachments/assets/9407efc1-c7e4-4e7e-b2ed-d389e1f03680)
-![Image](https://github.com/user-attachments/assets/bfe2ba5b-709b-43b4-a058-055c84b1f6b3)
-![Image](https://github.com/user-attachments/assets/886bbac6-9718-4a05-97c2-7f229342d190)
-![Image](https://github.com/user-attachments/assets/bd0b6d53-3aa0-4fe2-a946-a8c06bdcfe35)
+### Face Recognition & Liveness  
+![Face Recognition & Liveness](https://github.com/Rashi14111/AI-KYC-Project/blob/main/images/02_Video%26voiceverification.jpg?raw=true)
 
-Face Recognition & Liveness
+### Signature Verification  
+![Signature Verification](https://github.com/Rashi14111/AI-KYC-Project/blob/main/images/03_DigitalSig.jpg?raw=true)
 
-Signature Verification
-
-
-Final KYC Score
+### Final KYC Score  
+![Final KYC Score](https://github.com/Rashi14111/AI-KYC-Project/blob/main/images/04_final_validation.jpg?raw=true)
