@@ -49,14 +49,17 @@ Copy code
 ```bash
 git clone https://github.com/Rashi14111/AI-KYC-Project.git
 cd AI-KYC-Project
-pip install -r requirements.txt
+pip install -r requirements.txt![01_upload_and_extract_details](https://github.com/user-attachments/assets/25ba9758-d779-4c9d-ab5c-c4c4a17d8978)
+
 streamlit run app.py
 📸 Screenshots
 
-![Document Verification](https://raw.githubusercontent.com/Rashi14111/AI-KYC-Project/d906c4607be764dc460d8d058000182177b1c0c0/images/01_upload_and_extract_details.jpg)
+
 
 Face Recognition & Liveness
 
 Signature Verification
+![02_Video voiceverification](https://github.com/user![02_Video voiceverification](https://github.com/user-attachments/assets/ae3934ec-9d13-4286-a7b2-465dcf2f27d8)
+-attachments/assets/13d12648-8ec8-424c-a898-13d9b46d0bd3)
 
 Final KYC Score
