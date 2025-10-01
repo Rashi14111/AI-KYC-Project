@@ -53,7 +53,8 @@ pip install -r requirements.txt![01_upload_and_extract_details](https://github.c
 
 streamlit run app.py
 
-📸 Screenshots
+📸 Screenshots<img width="1207" height="401" alt="image" src="https://github.com/user-attachments/assets/6a04fd5a-b008-4ca8-80f8-73b63d670db2" />
+
 
 ![Image](https://github.com/user-attachments/assets/9407efc1-c7e4-4e7e-b2ed-d389e1f03680)
 ![Image](https://github.com/user-attachments/assets/bfe2ba5b-709b-43b4-a058-055c84b1f6b3)
