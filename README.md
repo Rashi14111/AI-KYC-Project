@@ -48,6 +48,6 @@ streamlit run app.py
 📸 Screenshots
 
 Document Verification -  https://github.com/Rashi14111/AI-KYC-Project/blob/main/01_upload%20and%20Extractdetails%20.jpg
-Face Recognition & Liveness -
-Signature Verification
-Final KYC Score
+Face Recognition & Liveness - https://github.com/Rashi14111/AI-KYC-Project/blob/main/02_Video%26voiceverification.jpg
+Signature Verification  - https://github.com/Rashi14111/AI-KYC-Project/blob/main/02_Video%26voiceverification.jpg
+Final KYC Score - https://github.com/Rashi14111/AI-KYC-Project/blob/main/04_final_validation.jpg
