@@ -1,13 +1,7 @@
-![04_final_validation](https://github.com/user-attachments/assets/b9097152-5b37-495c-8005-99a5ee8c33d3)
-![03_DigitalSig](https://github.com/user-attachments/assets/f8a1ea1f-b3cd-484d-896d-137c45161c80)
-![02_Video voiceverification](https://github.com/user-attachments/assets/aa225361-d659-4cda-84b8-13d8a58e774f)
-![01_upload_and_extract_details](https://github.com/user-attachments/assets/54cf933d-cc21-492c-b885-cf7dcedea03f)
 # 🛡️ AI-Powered KYC Verification System  
 
 An **end-to-end AI-driven KYC (Know Your Customer) system** built with **Streamlit, OpenCV, TensorFlow, and Speech Recognition**.  
 It automates document verification, face recognition, liveness detection, voice confirmation, and signature verification — ensuring secure identity validation.  
-
----
 
 ## 🚀 Features
 
@@ -18,15 +12,12 @@ It automates document verification, face recognition, liveness detection, voice 
 - ✍️ **Signature Verification** – Compares PAN card signature with a drawn digital signature  
 - 📊 **Final KYC Scoring** – Aggregates all checks to approve/reject identity  
 
----
 
 ## 🛠️ Tech Stack
 
 - **Languages:** Python  
 - **Libraries:** Streamlit, OpenCV, FaceRecognition, SpeechRecognition, NumPy, Pandas, cvzone  
 - **Deployment:** Streamlit Cloud / Docker  
-
----
 
 ## 📂 Project Structure
 
@@ -43,25 +34,31 @@ AI-KYC-Project/
 │── uploads/ # Temporary uploads
 │── images/ # Screenshots
 
-yaml
-Copy code
 
----
+
+## 📸 Screenshots
+
+STEP1 :  Document Verification
+ 
+![01_upload_and_extract_details](https://github.com/user-attachments/assets/54cf933d-cc21-492c-b885-cf7dcedea03f)
+
+STEP 2 : Face Recognition & Liveness  
+
+![02_Video voiceverification](https://github.com/user-attachments/assets/aa225361-d659-4cda-84b8-13d8a58e774f)
+
+STEP 3: Signature Verification 
+
+![03_DigitalSig](https://github.com/user-attachments/assets/f8a1ea1f-b3cd-484d-896d-137c45161c80)
+
+STEP 4 :Final KYC Score  
+
+![04_final_validation](https://github.com/user-attachments/assets/b9097152-5b37-495c-8005-99a5ee8c33d3)
+
 
 ## ▶️ Run Locally
 
 ```bash
 git clone https://github.com/Rashi14111/AI-KYC-Project.git
 cd AI-KYC-Project
-pip install -r requirements.txt![01_upload_and_extract_details](https://github.com/user-attachments/assets/25ba9758-d779-4c9d-ab5c-c4c4a17d8978)
+pip install -r requirements.txt
 streamlit run app.py
-## 📸 Screenshots
-
-All the project screenshots are included in the [`/images`](./images) folder of this repository.  
-
-- `01_upload_and_extract_details.jpg` → Document Verification  
-- `02_Video&voiceverification.jpg` → Face Recognition & Liveness  
-- `03_DigitalSig.jpg` → Signature Verification  
-- `04_final_validation.jpg` → Final KYC Score  
-
-![Final KYC Score](https://github.com/Rashi14111/AI-KYC-Project/blob/main/images/04_final_validation.jpg?raw=true)
