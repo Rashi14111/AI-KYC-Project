@@ -55,8 +55,10 @@ streamlit run app.py
 
 📸 Screenshots
 
-- images/01_upload_and_extract_details.jpg
-
+![Image](https://github.com/user-attachments/assets/9407efc1-c7e4-4e7e-b2ed-d389e1f03680)
+![Image](https://github.com/user-attachments/assets/bfe2ba5b-709b-43b4-a058-055c84b1f6b3)
+![Image](https://github.com/user-attachments/assets/886bbac6-9718-4a05-97c2-7f229342d190)
+![Image](https://github.com/user-attachments/assets/bd0b6d53-3aa0-4fe2-a946-a8c06bdcfe35)
 
 Face Recognition & Liveness
 
